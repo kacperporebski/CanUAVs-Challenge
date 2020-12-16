@@ -9,14 +9,13 @@ namespace CanUAVs_Challenge
         public List<string> result { get; set; }
 
         //Using the container Radar class with data for both sensors.
-        public RadarComparator(Radar radarToCompare)
+        public RadarComparator()
         {
             result = new List<string>();
-            compareSensors(radarToCompare);
         }
 
 
-        void compareSensors(Radar radar)
+        public void compareSensors(Radar radar)
         {
             List<String> sameEntities = getSameEntities(radar.csvSensor, radar.jsonSensor);         //Find the data that corresponds to hits for both sensors
             List<String> missedSensorsList = getNonMatchingEntities(radar.csvSensor, radar.jsonSensor, sameEntities);       //Find the data that only corresponds to hits for one sensor
@@ -28,7 +27,7 @@ namespace CanUAVs_Challenge
 
         //This function finds the sensor data that corresponds to only one sensor detecting the object.
 
-        List<string> getSameEntities(List<SensorData> csv, List<SensorData> json)
+       private List<string> getSameEntities(List<SensorData> csv, List<SensorData> json)
         {
             List<string> result = new List<string>();
 
@@ -40,56 +39,48 @@ namespace CanUAVs_Challenge
                         result.Add(y.Id + ":" + x.Id);
 
                 }
-
-
             }
-
             return result;
-
         }
 
 
         //This function finds the sensor data that corresponds to only one sensor detecting the object.
-        List<String> getNonMatchingEntities(List<SensorData> csv, List<SensorData> json, List<String> matchingList)
+        private List<String> getNonMatchingEntities(List<SensorData> csv, List<SensorData> json, List<String> matchingList)
         {
             List<String> result = new List<string>();
 
-            foreach (var VARIABLE in csv)
+            foreach (var sensorData in csv)
             {
                 for (int i = 0; i < matchingList.Count; i++)
                 {
-                    if (VARIABLE.Id == matchingList[i].Split(':')[0])
+                    if (sensorData.Id == matchingList[i].Split(':')[0])
                         break;
                     if (i == matchingList.Count - 1)
                     {
-                        result.Add(VARIABLE.Id + ":-1");
+                        result.Add(sensorData.Id + ":-1");
                     }
                 }
 
             }
 
-            foreach (var VARIABLE in json)
+            foreach (var sensorData in json)
             {
                 for (int i = 0; i < matchingList.Count; i++)
                 {
-                    if (VARIABLE.Id == matchingList[i].Split(':')[1])
+                    if (sensorData.Id == matchingList[i].Split(':')[1])
                         break;
                     if (i == matchingList.Count - 1)
                     {
-                        result.Add("-1:" + VARIABLE.Id);
+                        result.Add("-1:" + sensorData.Id);
                     }
                 }
-
             }
-
-
-
             return result;
         }
 
         
         //This function is used to calculate the distance in METERS between two sets of co-ordinates
-        double calcDistance(double lat1, double longi1, double lat2, double longi2)
+         private double calcDistance(double lat1, double longi1, double lat2, double longi2)
         {
             double earthRadius = 6371000;  
 
