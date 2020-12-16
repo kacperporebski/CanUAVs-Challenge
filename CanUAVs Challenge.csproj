@@ -48,7 +48,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Radar.cs" />
-    <Compile Include="Sensor.cs" />
+    <Compile Include="RadarComparator.cs" />
+    <Compile Include="MyFileParser.cs" />
     <Compile Include="SensorData.cs" />
   </ItemGroup>
   <ItemGroup>

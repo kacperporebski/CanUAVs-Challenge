@@ -5,9 +5,12 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace CanUAVs_Challenge
 {
-    internal class SensorData
+    
+    //Container class for sensor data 
+    //Makes handling the data significantly easier and more convenient
+    public class SensorData
     {
-        public string Id { get; set; }
+        public string Id { get; set; }  
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 

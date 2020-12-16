@@ -11,9 +11,11 @@ namespace CanUAVs_Challenge
     {
         static void Main(string[] args)
         {
-            Radar challengeRadar = new Radar( @args[0], @args[1]);
-            //Radar challengeRadar = new Radar(@"X:\input.csv", @"X:\input.json");
-            //Radar challengeRadar = new Radar(@"X:\problem3.csv", @"X:\problem3.json");
+            MyFileParser myFileParser = new MyFileParser();     //instantiate my file parser
+            Radar challengeRadar = new Radar(myFileParser.parseFile(args[0]), myFileParser.parseFile(args[1]));     //parse files and generate the appropriate sensors in the radar.
+            RadarComparator resultGenerator = new RadarComparator(challengeRadar);      //Compare the data and generate the requested result of <ID sensor 1 : ID sensor 2>
+            myFileParser.outputToFile(resultGenerator.result);              // Output the result to a  text file
+           
         }
     }
 }
